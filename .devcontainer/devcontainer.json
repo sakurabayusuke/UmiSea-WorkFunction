@@ -12,7 +12,9 @@
         "donjayamanne.python-extension-pack",
         "mgesbert.python-path",
         "ms-python.vscode-pylance",
-        "christian-kohler.path-intellisense"
+        "christian-kohler.path-intellisense",
+        "ms-python.flake8",
+        "mikoz.black-py"
       ]
     }
   }
