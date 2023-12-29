@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  develop:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: "develop"
+    # tty と stdin_open はコンテナを持続させ続けるために必要
+    tty: true
+    stdin_open: true
+    environment:
+      - UMISHIRU_API_KEY=${UMISHIRU_API_KEY}
+    volumes:
+      - ./src:/workspace/src:cached
