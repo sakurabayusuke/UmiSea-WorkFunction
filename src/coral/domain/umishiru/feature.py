@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, post_load
-from domain.attribute import AttributeSchema
-from domain.geometry import GeometrySchema
+from domain.umishiru.attribute import AttributeSchema
+from domain.umishiru.geometry import GeometrySchema
 
 
 class Feature:

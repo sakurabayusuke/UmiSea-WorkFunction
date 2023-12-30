@@ -1,8 +1,8 @@
 from marshmallow import Schema, post_load
 from marshmallow import fields as marshmallow_fields
-from domain.feature import FeatureSchema
-from domain.field import FieldSchema
-from domain.spatial_Reference import SpatialReferenceSchema
+from domain.umishiru.feature import FeatureSchema
+from domain.umishiru.field import FieldSchema
+from domain.umishiru.spatial_Reference import SpatialReferenceSchema
 
 
 class GeoSummary:
