@@ -1,9 +1,10 @@
 import os
 import requests
 import numpy as np
+from error.exceeded_transfer_limit import ExceededTransferLimitError
 from error.convert_error import ConvertError
-
-from domain.geo_summary import GeoSummary, GeoSummaryShema
+from tqdm import tqdm
+from domain.umishiru.geo_summary import GeoSummary, GeoSummaryShema
 
 
 class CoralRepository:
@@ -21,16 +22,19 @@ class CoralRepository:
             "&returnGeometry=true"
         )
 
-    def get_all_coral(self):
+    def get_all_coral(self) -> list[GeoSummary]:
         east_longitude_start = 110.0
         east_longitude_end = 155.0
-        search_wide = 0.5
         north_latitude_start = 10.0
         north_latitude_end = 46.0
         search_height = 0.5
-        for latitude in np.arange(north_latitude_start, north_latitude_end + 1, search_height):
-            for longitude in np.arange(east_longitude_start, east_longitude_end + 1, search_wide):
-                where = f"&geometry={longitude},{latitude},{longitude + search_wide},{latitude + search_height}"
+        geoSummaryList = []
+        with tqdm(np.arange(north_latitude_start, north_latitude_end + 1, search_height)) as progress_bar:
+            for latitude in progress_bar:
+
+                progress_bar.set_description("download")
+
+                where = f"&geometry={east_longitude_start},{latitude},{east_longitude_end},{latitude + search_height}"
                 url = self.__url_base + where
                 response = requests.get(url, headers=self.__header)
                 response.raise_for_status()
@@ -38,4 +42,7 @@ class CoralRepository:
                 geoSummary = geoSummarySchema.load(response.json())
                 if not isinstance(geoSummary, GeoSummary):
                     raise ConvertError("can not convert json Object to GeoSummary")
-                # 疲れた寝る。
+                if geoSummary.exceededTransferLimit:
+                    raise ExceededTransferLimitError("can not all coral data")
+                geoSummaryList.append(geoSummary)
+        return geoSummaryList

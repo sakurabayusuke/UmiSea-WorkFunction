@@ -1,10 +1,10 @@
 from marshmallow import Schema, fields, post_load
-from domain.umishiru.attribute import AttributeSchema
-from domain.umishiru.geometry import GeometrySchema
+from domain.umishiru.attribute import Attribute, AttributeSchema
+from domain.umishiru.geometry import Geometry, GeometrySchema
 
 
 class Feature:
-    def __init__(self, attributes, geometry):
+    def __init__(self, attributes: Attribute, geometry: Geometry):
         self.attributes = attributes
         self.geometry = geometry
 

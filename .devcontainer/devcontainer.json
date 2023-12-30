@@ -14,7 +14,8 @@
         "ms-python.vscode-pylance",
         "christian-kohler.path-intellisense",
         "ms-python.flake8",
-        "mikoz.black-py"
+        "mikoz.black-py",
+        "mechatroner.rainbow-csv"
       ]
     }
   }
