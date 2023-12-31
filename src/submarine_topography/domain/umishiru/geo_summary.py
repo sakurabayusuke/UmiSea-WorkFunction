@@ -1,9 +1,9 @@
 from marshmallow import Schema, post_load
 from marshmallow import fields as marshmallow_fields
-from domain.umishiru.feature import Feature, FeatureSchema
-from domain.umishiru.field import Field, FieldSchema
-from domain.umishiru.spatial_Reference import SpatialReference, SpatialReferenceSchema
-from domain.umishiru.field_aliases import FiledAliases, FiledAliasesSchema
+from submarine_topography.domain.umishiru.feature import Feature, FeatureSchema
+from submarine_topography.domain.umishiru.field import Field, FieldSchema
+from submarine_topography.domain.umishiru.spatial_Reference import SpatialReference, SpatialReferenceSchema
+from submarine_topography.domain.umishiru.field_aliases import FiledAliases, FiledAliasesSchema
 
 
 class GeoSummary:

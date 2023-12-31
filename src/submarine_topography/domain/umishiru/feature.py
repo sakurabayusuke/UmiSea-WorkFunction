@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, post_load
-from domain.umishiru.attribute import Attribute, AttributeSchema
-from domain.umishiru.geometry import Geometry, GeometrySchema
+from submarine_topography.domain.umishiru.attribute import Attribute, AttributeSchema
+from submarine_topography.domain.umishiru.geometry import Geometry, GeometrySchema
 
 
 class Feature:

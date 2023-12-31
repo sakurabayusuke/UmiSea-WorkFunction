@@ -1,8 +1,8 @@
 import os
 import requests
-from error.exceeded_transfer_limit import ExceededTransferLimitError
+from error.exceeded_transfer_limit_error import ExceededTransferLimitError
 from error.convert_error import ConvertError
-from domain.umishiru.geo_summary import GeoSummary, GeoSummarySchema
+from submarine_topography.domain.umishiru.geo_summary import GeoSummary, GeoSummarySchema
 
 
 class SubmarineTopographyRepository:

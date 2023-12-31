@@ -1,6 +1,6 @@
 import csv
-from domain.umishiru.geo_summary import GeoSummary
-from repository.submarin_topography_repository import SubmarineTopographyRepository
+from submarine_topography.domain.umishiru.geo_summary import GeoSummary
+from submarine_topography.repository.submarin_topography_repository import SubmarineTopographyRepository
 import os
 
 
