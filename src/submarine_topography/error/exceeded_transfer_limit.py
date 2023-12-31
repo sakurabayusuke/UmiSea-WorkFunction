@@ -1,0 +1,2 @@
+class ExceededTransferLimitError(Exception):
+    pass
