@@ -1,4 +1,0 @@
-from submarine_topography.application.submarine_topography_application import SubmarineTopographyApplication
-
-app = SubmarineTopographyApplication()
-app.out_all_point_of_submarine_topography_as_csv()
