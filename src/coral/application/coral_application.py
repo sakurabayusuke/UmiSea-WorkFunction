@@ -1,7 +1,7 @@
 import csv
-from domain.coral import Coral
-from domain.umishiru.geo_summary import GeoSummary
-from repository.coral_repository import CoralRepository
+from coral.domain.coral import Coral
+from coral.domain.umishiru.geo_summary import GeoSummary
+from coral.repository.coral_repository import CoralRepository
 from tqdm import tqdm
 import os
 

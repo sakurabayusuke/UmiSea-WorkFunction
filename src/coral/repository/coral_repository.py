@@ -1,7 +1,7 @@
 import os
 import requests
 import numpy as np
-from error.exceeded_transfer_limit import ExceededTransferLimitError
+from error.exceeded_transfer_limit_error import ExceededTransferLimitError
 from error.convert_error import ConvertError
 from tqdm import tqdm
 from domain.umishiru.geo_summary import GeoSummary, GeoSummaryShema
