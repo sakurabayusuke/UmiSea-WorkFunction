@@ -31,6 +31,8 @@ class SubmarineTopographyApplication:
                     "会議名",
                     "JCUFN_approved",
                     "SCUFN_approved",
+                    "x",
+                    "y"
                 ]
             )
 
