@@ -18,7 +18,7 @@ class Application(Enum):
 
 
 class CoralApp(Enum):
-    OUT_ALL_CORALAS_CSV = "out_all_coral_as_csv"
+    OUT_ALL_CORALS_CSV = "out_all_coral_as_csv"
     OUTPUT_CORAL_INSERT_SQL = "output_coral_insert_sql"
 
     @classmethod
