@@ -17,10 +17,22 @@ class Application(Enum):
         return [i.value for i in cls]
 
 
-def menu(stdscr):
+class CoralApp(Enum):
+    OUT_ALL_CORALAS_CSV = "out_all_coral_as_csv"
+    OUTPUT_CORAL_INSERT_SQL = "output_coral_insert_sql"
+
+    @classmethod
+    def get_names(cls) -> list:
+        return [i.name for i in cls]
+
+    @classmethod
+    def get_values(cls) -> list:
+        return [i.value for i in cls]
+
+
+def display(stdscr, menu: list[str]) -> str:
     curses.curs_set(0)
     current_row = 0
-    menu = Application.get_values()
 
     while True:
         stdscr.clear()
@@ -45,12 +57,21 @@ def menu(stdscr):
         elif key == curses.KEY_DOWN:
             current_row += 1
         elif key == curses.KEY_ENTER or key in [10, 13]:  # Enterキーが押されたら終了
-            selected = menu[current_row]
+            return menu[current_row]
             break
-    if selected == Application.SUBMARINE_TOPOGRAPHY.value:
+
+
+def menu(stdscr):
+    selected_app = display(stdscr, Application.get_values())
+    if selected_app == Application.SUBMARINE_TOPOGRAPHY.value:
         SubmarineTopographyApplication().out_all_point_of_submarine_topography_as_csv()
-    elif selected == Application.CORAL.value:
-        CoralApplication().out_all_coral_as_csv()
+    elif selected_app == Application.CORAL.value:
+        selected_method = display(stdscr, CoralApp.get_values())
+        coral_app = CoralApplication()
+        if selected_method == CoralApp.OUT_ALL_CORALAS_CSV.value:
+            coral_app.out_all_coral_as_csv()
+        if selected_method == CoralApp.OUTPUT_CORAL_INSERT_SQL.value:
+            coral_app.output_coral_insert_sql()
 
 
 curses.wrapper(menu)
