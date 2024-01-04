@@ -48,4 +48,4 @@ class CoralApplication:
 
             with open(self.__insert_sql_path, "w", encoding="utf-8", newline="\n") as f2:
                 for row in reader:
-                    f2.write(f"INSERT INTO UMISHIRU_CORALS (COORDINATE) VALUES (ST_GeomFromText('POINT({row[1]} {row[2]})', 4612));\n")
+                    f2.write(f"INSERT INTO UMISHIRU_CORALS (COORDINATE) VALUES (ST_GeomFromText('POINT({row[1]} {row[2]})', 4326));\n")
