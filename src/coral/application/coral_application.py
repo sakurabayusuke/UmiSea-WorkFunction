@@ -9,6 +9,8 @@ import os
 class CoralApplication:
     def __init__(self):
         self.__repository = CoralRepository()
+        self.__csv_data_path = "data/coral.csv"
+        self.__insert_sql_path = "data/coral_insert.sql"
 
     def get_all_coral_from_umishiru(self) -> list[GeoSummary]:
         return self.__repository.get_all_coral()
@@ -24,10 +26,9 @@ class CoralApplication:
                               coral_detail.geometry.y)
                 corals.append(coral)
 
-        filepath = "data/coral.csv"
-        if os.path.isfile(filepath):
-            os.remove(filepath)
-        with open(filepath, "w", encoding="utf-8", newline="\n") as f:
+        if os.path.isfile(self.__csv_data_path):
+            os.remove(self.__csv_data_path)
+        with open(self.__csv_data_path, "w", encoding="utf-8", newline="\n") as f:
             writer = csv.writer(f)
             writer.writerow(["底質", "経度", "緯度"])
 
@@ -35,3 +36,16 @@ class CoralApplication:
                 for coral in progres_bar:
                     progres_bar.set_description("csv output")
                     writer.writerow([coral.attribute, coral.longitude, coral.latitude])
+
+    def output_coral_insert_sql(self):
+        if not os.path.isfile(self.__csv_data_path):
+            raise FileNotFoundError("data/coral.csv not found...")
+        if os.path.isfile(self.__insert_sql_path):
+            os.remove(self.__insert_sql_path)
+        with open(self.__csv_data_path, encoding="utf-8") as f:
+            reader = csv.reader(f)
+            next(reader)
+
+            with open(self.__insert_sql_path, "w", encoding="utf-8", newline="\n") as f2:
+                for row in reader:
+                    f2.write(f"INSERT INTO UMISHIRU_CORALS (COORDINATE) VALUES (ST_GeomFromText('POINT({row[1]} {row[2]})', 4326));\n")
