@@ -17,6 +17,19 @@ class Application(Enum):
         return [i.value for i in cls]
 
 
+class SubmarineTopographyApp(Enum):
+    OUT_ALL_POINT_OF_SUBMARINE_TOPOGRAPHY_CSV = "out_all_point_of_submarine_topography_as_csv"
+    OUTPUT_SUBMARINE_TOPOGRAPHY_POINT_INSERT_SQL = "output_submarine_topography_point_insert_sql"
+
+    @classmethod
+    def get_names(cls) -> list:
+        return [i.name for i in cls]
+
+    @classmethod
+    def get_values(cls) -> list:
+        return [i.value for i in cls]
+
+
 class CoralApp(Enum):
     OUT_ALL_CORALS_CSV = "out_all_coral_as_csv"
     OUTPUT_CORAL_INSERT_SQL = "output_coral_insert_sql"
@@ -64,11 +77,16 @@ def display(stdscr, menu: list[str]) -> str:
 def menu(stdscr):
     selected_app = display(stdscr, Application.get_values())
     if selected_app == Application.SUBMARINE_TOPOGRAPHY.value:
-        SubmarineTopographyApplication().out_all_point_of_submarine_topography_as_csv()
+        selected_method = display(stdscr, SubmarineTopographyApp.get_values())
+        submarine_app = SubmarineTopographyApplication()
+        if selected_method == SubmarineTopographyApp.OUT_ALL_POINT_OF_SUBMARINE_TOPOGRAPHY_CSV.value:
+            submarine_app.out_all_point_of_submarine_topography_as_csv()
+        if selected_method == SubmarineTopographyApp.OUTPUT_SUBMARINE_TOPOGRAPHY_POINT_INSERT_SQL.value:
+            submarine_app.output_submarine_topography_point_insert_sql()
     elif selected_app == Application.CORAL.value:
         selected_method = display(stdscr, CoralApp.get_values())
         coral_app = CoralApplication()
-        if selected_method == CoralApp.OUT_ALL_CORALAS_CSV.value:
+        if selected_method == CoralApp.OUT_ALL_CORALS_CSV.value:
             coral_app.out_all_coral_as_csv()
         if selected_method == CoralApp.OUTPUT_CORAL_INSERT_SQL.value:
             coral_app.output_coral_insert_sql()
