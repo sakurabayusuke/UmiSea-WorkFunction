@@ -5,6 +5,7 @@ from coral.domain.umishiru.geo_summary import GeoSummary
 from coral.repository.coral_repository import CoralRepository
 from tqdm import tqdm
 import os
+from decimal import Decimal
 
 
 class CoralApplication:
@@ -65,7 +66,7 @@ class CoralApplication:
             with open(self.__json_data_path, 'w', encoding="utf-8") as f:
                 data = []
                 for row in reader:
-                    dic = {"type": "Feature", "properties": {"bottom_material": list(row[0].split(","))}, "geometry": {"type": "Point", "coordinates" : [row[1], row[2]]}}
+                    dic = {"type": "Feature", "properties": {"bottom_material": list(row[0].split(","))}, "geometry": {"type": "Point", "coordinates" : [float(row[1]), float(row[2])]}}
                     data.append(dic)
 
                 data = {"type": "FeatureCollection",
