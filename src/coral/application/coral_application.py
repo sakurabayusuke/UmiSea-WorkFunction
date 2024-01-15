@@ -12,7 +12,7 @@ class CoralApplication:
         self.__repository = CoralRepository()
         self.__csv_data_path = "data/coral.csv"
         self.__insert_sql_path = "data/coral_insert.sql"
-        self.__json_data_path = "data/coral.json"
+        self.__json_data_path = "data/coral.geojson"
 
     def get_all_coral_from_umishiru(self) -> list[GeoSummary]:
         return self.__repository.get_all_coral()
