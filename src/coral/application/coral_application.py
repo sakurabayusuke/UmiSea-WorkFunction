@@ -1,4 +1,5 @@
 import csv
+import json
 from coral.domain.coral import Coral
 from coral.domain.umishiru.geo_summary import GeoSummary
 from coral.repository.coral_repository import CoralRepository
@@ -11,6 +12,7 @@ class CoralApplication:
         self.__repository = CoralRepository()
         self.__csv_data_path = "data/coral.csv"
         self.__insert_sql_path = "data/coral_insert.sql"
+        self.__json_data_path = "data/coral.json"
 
     def get_all_coral_from_umishiru(self) -> list[GeoSummary]:
         return self.__repository.get_all_coral()
@@ -49,3 +51,24 @@ class CoralApplication:
             with open(self.__insert_sql_path, "w", encoding="utf-8", newline="\n") as f2:
                 for row in reader:
                     f2.write(f"INSERT INTO UMISHIRU_CORALS (COORDINATE) VALUES (ST_GeomFromText('POINT({row[1]} {row[2]})', 4326));\n")
+
+    def csv_to_json(self):
+        if not os.path.isfile(self.__csv_data_path):
+            raise FileNotFoundError("data/coral.csv not found...")
+        if os.path.isfile(self.__insert_sql_path):
+            os.remove(self.__insert_sql_path)
+
+        with open(self.__csv_data_path, 'r') as f:
+            reader = csv.reader(f)
+            header = next(reader)
+
+            with open(self.__json_data_path, 'w', encoding="utf-8") as f:
+                data = []
+                for row in reader:
+                    dic = {"type": "Feature", "properties": {"bottom_material": list(row[0].split(","))}, "geometry": {"type": "Point", "coordinates" : [row[1], row[2]]}}
+                    data.append(dic)
+
+                data = {"type": "FeatureCollection",
+                        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                        "features" : data}
+                json.dump(data, f, ensure_ascii=False)

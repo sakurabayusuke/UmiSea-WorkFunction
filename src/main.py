@@ -33,6 +33,7 @@ class SubmarineTopographyApp(Enum):
 class CoralApp(Enum):
     OUT_ALL_CORALS_CSV = "out_all_coral_as_csv"
     OUTPUT_CORAL_INSERT_SQL = "output_coral_insert_sql"
+    CSV_TO_JSON = "csv_to_json"
 
     @classmethod
     def get_names(cls) -> list:
@@ -90,6 +91,8 @@ def menu(stdscr):
             coral_app.out_all_coral_as_csv()
         if selected_method == CoralApp.OUTPUT_CORAL_INSERT_SQL.value:
             coral_app.output_coral_insert_sql()
+        if selected_method == CoralApp.CSV_TO_JSON.value:
+            coral_app.csv_to_json()
 
 
 curses.wrapper(menu)
