@@ -8,7 +8,7 @@ import os
 class SubmarineTopographyApplication:
     def __init__(self):
         self.__repository = SubmarineTopographyRepository()
-        self.__csv_data_path = "data/point_of_submarine_topograhy.csv"
+        self.__csv_data_path = "data/point_of_submarine_topography.csv"
         self.__insert_submarine_point_sql_path = "data/submarine_topography_insert.sql"
 
     def get_all_point_of_submarine_topography(self) -> GeoSummary:
