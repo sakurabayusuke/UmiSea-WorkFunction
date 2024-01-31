@@ -20,6 +20,7 @@ class Application(Enum):
 class SubmarineTopographyApp(Enum):
     OUT_ALL_POINT_OF_SUBMARINE_TOPOGRAPHY_CSV = "out_all_point_of_submarine_topography_as_csv"
     OUTPUT_SUBMARINE_TOPOGRAPHY_POINT_INSERT_SQL = "output_submarine_topography_point_insert_sql"
+    OUT_JSON = "out_json"
 
     @classmethod
     def get_names(cls) -> list:
@@ -84,6 +85,8 @@ def menu(stdscr):
             submarine_app.out_all_point_of_submarine_topography_as_csv()
         if selected_method == SubmarineTopographyApp.OUTPUT_SUBMARINE_TOPOGRAPHY_POINT_INSERT_SQL.value:
             submarine_app.output_submarine_topography_point_insert_sql()
+        if selected_method == SubmarineTopographyApp.OUT_JSON.value:
+            submarine_app.out_json()
     elif selected_app == Application.CORAL.value:
         selected_method = display(stdscr, CoralApp.get_values())
         coral_app = CoralApplication()
