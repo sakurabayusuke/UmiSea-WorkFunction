@@ -46,3 +46,17 @@ class FeatureType(Enum):
             if enum.value[1] == name:
                 return enum.value[0]
         return cls.UNDEFINED.value[0]
+
+    @classmethod
+    def str_to_enum(cls, name: str) -> 'FeatureType':
+        for enum in cls:
+            if enum.value[1] == name:
+                return enum
+        return cls.UNDEFINED
+
+    @classmethod
+    def int_to_enum(cls, num: int) -> 'FeatureType':
+        for enum in cls:
+            if enum.value[0] == num:
+                return enum
+        return cls.UNDEFINED

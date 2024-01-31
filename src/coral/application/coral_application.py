@@ -56,8 +56,8 @@ class CoralApplication:
     def csv_to_json(self):
         if not os.path.isfile(self.__csv_data_path):
             raise FileNotFoundError("data/coral.csv not found...")
-        if os.path.isfile(self.__insert_sql_path):
-            os.remove(self.__insert_sql_path)
+        if os.path.isfile(self.__json_data_path):
+            os.remove(self.__json_data_path)
 
         with open(self.__csv_data_path, 'r') as f:
             reader = csv.reader(f)

@@ -1,4 +1,8 @@
 import csv
+import itertools
+import json
+from typing import List
+from submarine_topography.domain.seafarlen.seafarlen_feature import SeafarlenFeature
 from submarine_topography.domain.umishiru.feature_type import FeatureType
 from submarine_topography.domain.umishiru.geo_summary import GeoSummary
 from submarine_topography.repository.submarin_topography_repository import SubmarineTopographyRepository
@@ -10,6 +14,7 @@ class SubmarineTopographyApplication:
         self.__repository = SubmarineTopographyRepository()
         self.__csv_data_path = "data/point_of_submarine_topography.csv"
         self.__insert_submarine_point_sql_path = "data/submarine_topography_insert.sql"
+        self.__data_folder_path = "data/submarine_topography/"
 
     def get_all_point_of_submarine_topography(self) -> GeoSummary:
         return self.__repository.get_all_point_of_submarine_topography()
@@ -89,3 +94,30 @@ GEOMETRY_POINT) VALUES (\
 '{f"{row[8]}/01/01 0:00:00" if row[8] != "" and len(row[8]) == 4 else "1000/01/01 0:00:00"}', \
 '{f"{row[9]}/01/01 0:00:00" if row[9] != "" and len(row[9]) == 4 else "1000/01/01 0:00:00"}', \
 ST_GeomFromText('POINT({row[10]} {row[11]})', 4326));\n")
+
+    def out_json(self):
+        if not os.path.isfile(self.__csv_data_path):
+            raise FileNotFoundError("data/submarine_topography.csv not found...")
+
+        features: List[SeafarlenFeature] = []
+        with open(self.__csv_data_path, 'r') as f:
+            reader = csv.reader(f)
+            header = next(reader)
+
+            for row in reader:
+                features.append(SeafarlenFeature(*row))
+
+        features = sorted(features, key=lambda x: x.feature_type.value[0])
+        for key, items in itertools.groupby(features, lambda x: x.feature_type.value[0]):
+            group_enum = FeatureType.int_to_enum(key)
+            out_path = f"{self.__data_folder_path}{group_enum.name.lower()}.geojson"
+
+            if os.path.isfile(out_path):
+                os.remove(out_path)
+
+            feature_jsons = [item.to_json() for item in items]
+            with open(out_path, 'w', encoding="utf-8") as f:
+                data = {"type": "FeatureCollection",
+                        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                        "features" : feature_jsons}
+                json.dump(data, f, ensure_ascii=False)
